@@ -63,7 +63,7 @@ cypress-e2e:
     stage: test
     before_script:
         - npm ci
-        - apk add python3 >/dev/null
+        - apt-get install python3 >/dev/null
         - .gitlab/django_before_install.sh
         - source venv/bin/activate
     script:
