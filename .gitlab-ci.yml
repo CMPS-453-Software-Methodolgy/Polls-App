@@ -4,13 +4,19 @@ stages:
     - test
     - deploy
 
+## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
 cache:
     paths:
         - .cache/pip/
         - venv/
         - staticfiles/
-        - node_modules/
-        - .npm/
+        - cache/Cypress
+        - node_modules
+        - build
 
 # Defines the job in Static Analysis
 django-lint:

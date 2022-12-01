@@ -48,12 +48,11 @@ It will take several minutes to download and install cypress in the polls app's 
 
 
 ## Run the Cypress tests
-
 To execute all the cypress tests, run the following command:
 ```bash
 npm run e2e
 ```
-This command will open a new window and click on the `test.js` file to start the tests.
+This command will open a new window and click on the `test.cy.js` file to start the tests.
 
 
 ### (optional)

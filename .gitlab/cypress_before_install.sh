@@ -1,3 +1,4 @@
+npm ci >/dev/null
 npm install cypress >/dev/null
 apt-get update >/dev/null
 apt-get install -y python3 python3-pip >/dev/null
