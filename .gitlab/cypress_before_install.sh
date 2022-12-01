@@ -5,7 +5,7 @@ apt-get install -y python3 python3-pip
 pip3 --version
 python3 --version
 pip3 install virtualenv
-python -m virtualenv venv
+python3 -m virtualenv venv
 source venv/bin/activate
 pip3 install --upgrade -q pip
 pip3 install --no-cache-dir -r requirements.txt
