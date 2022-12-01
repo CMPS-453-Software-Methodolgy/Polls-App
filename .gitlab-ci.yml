@@ -67,7 +67,6 @@ cypress-e2e:
     script:
         # start the server in the background
         - python manage.py runserver &
-        - npm run start:ci &
         # run Cypress tests
         - npx cypress run --headless
 
