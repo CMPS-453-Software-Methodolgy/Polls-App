@@ -59,7 +59,7 @@ django-tests:
                 path: coverage.xml
 
 cypress-e2e:
-    image: cypress/included:11.0.0
+    image: cypress/included:9.4.1
     stage: test
     before_script:
         - npm ci
