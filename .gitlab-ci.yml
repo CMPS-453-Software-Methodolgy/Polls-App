@@ -59,11 +59,11 @@ django-tests:
                 path: coverage.xml
 
 cypress-e2e:
-    image: cypress/base:16.13.0
+    image: python3.10-nodejs18
     stage: test
     before_script:
         - npm ci
-        - apt-get install python3 python3-pip >/dev/null
+        - npm i cypress --save-dev
         - pip3 install -q virtualenv
         - .gitlab/django_before_install.sh
         - source venv/bin/activate
