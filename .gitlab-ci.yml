@@ -59,10 +59,11 @@ django-tests:
                 path: coverage.xml
 
 cypress-e2e:
-    image: cypress/browsers:latest
+    image: cypress/base:12
     stage: test
     before_script:
         - npm ci
+        - apk add python3 >/dev/null
         - .gitlab/django_before_install.sh
         - source venv/bin/activate
     script:
@@ -70,7 +71,7 @@ cypress-e2e:
         - python manage.py runserver &
         - npm run start:ci &
         # run Cypress tests
-        - npx cypress run --headless --browser firefox
+        - npx cypress run --headless
 
 # Deploy polls app to Heroku
 heroku-deploy:
