@@ -63,7 +63,6 @@ cypress-e2e:
     stage: test
     before_script:
         - .gitlab/cypress_before_install.sh
-        - source venv/bin/activate
     script:
         # start the server in the background
         - python manage.py runserver &
