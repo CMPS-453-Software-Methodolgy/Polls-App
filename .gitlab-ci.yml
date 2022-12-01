@@ -9,6 +9,8 @@ cache:
         - .cache/pip/
         - venv/
         - staticfiles/
+        - node_modules/
+        - .npm/
 
 # Defines the job in Static Analysis
 django-lint:
@@ -55,6 +57,20 @@ django-tests:
             coverage_report:
                 coverage_format: cobertura
                 path: coverage.xml
+
+cypress-e2e:
+    image: cypress/browsers:latest
+    stage: test
+    before_script:
+        - npm ci
+        - .gitlab/django_before_install.sh
+        - source venv/bin/activate
+    script:
+        # start the server in the background
+        - python manage.py runserver &
+        - npm run start:ci &
+        # run Cypress tests
+        - npx cypress run --headless --browser firefox
 
 # Deploy polls app to Heroku
 heroku-deploy:
