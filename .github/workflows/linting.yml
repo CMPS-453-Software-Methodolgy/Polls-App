@@ -16,11 +16,13 @@ jobs:
 
             - name: Analysing the code with RUFF and pycodestyle
               run: |
+                  source venv/bin/activate
                   pylama .
                   ruff check
 
             - name: Check Django migrations
               run: |
+                  source venv/bin/activate
                   python manage.py makemigrations --check
                   python manage.py migrate --check
                   python manage.py check
@@ -29,4 +31,5 @@ jobs:
 
             - name: Run Django tests
               run: |
+                  source venv/bin/activate
                   python manage.py test
