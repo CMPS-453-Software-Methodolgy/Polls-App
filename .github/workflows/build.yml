@@ -16,4 +16,4 @@ jobs:
                       requirements.txt
             - name: Install PIP dependencies, Apply Django migrate, and collectstatic
               run: |
-                  .github/workflows/install_dependencies.sh]
+                  .github/workflows/install_dependencies.sh
