@@ -10,7 +10,7 @@ from users.models import CustomUser
 class Question(models.Model):
     """Question model class.
 
-    Attributes:
+    Attributes
     ----------
     author : ForeignKey
         Holds the author of the question.
@@ -35,7 +35,7 @@ class Question(models.Model):
     def was_published_recently(self):
         """Check if Question was published in last 24 hours.
 
-        Returns:
+        Returns
         -------
         bool:
             True, if published in last 24 hours.
@@ -48,7 +48,7 @@ class Question(models.Model):
 class Choice(models.Model):
     """Choice model class.
 
-    Attributes:
+    Attributes
     ----------
     answered_choice : ManyToManyField
         Holds the users who have answered the question with the choice.
