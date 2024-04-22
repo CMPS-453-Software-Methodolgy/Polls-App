@@ -1,10 +1,6 @@
 name: build
 on:
     workflow_call:
-        inputs:
-            config-path:
-                required: true
-                type: string
 
 jobs:
     reusable_workflow_job:
