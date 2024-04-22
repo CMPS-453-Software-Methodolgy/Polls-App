@@ -2,15 +2,16 @@ name: Code Quality Testing
 on: [push]
 jobs:
     build:
+        strategy:
+            matrix:
+                python-version: ['3.9', '3.10', '3.11']
         uses: ./.github/workflows/build.yml
 
     django_linting:
         runs-on: ubuntu-latest
-        needs: build
-        strategy:
-            matrix:
-                python-version: ['3.9', '3.10', '3.11']
         steps:
+            - name: Django listing
+              uses: ./.github/workflows/build.yml
             - name: Analysing the code with RUFF and pycodestyle
               run: |
                   pylama .
@@ -20,6 +21,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: django_linting
         steps:
+            - name: Django migrations
+              uses: ./.github/workflows/build.yml
             - name: Install PIP dependencies, Apply Django migrate, and collectstatic
               run: |
                   .github/workflows/install_dependencies.sh
@@ -35,6 +38,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: django_migrations
         steps:
+            - name: Django unit testing
+              uses: ./.github/workflows/build.yml
             - name: Run Django tests
               run: |
                   python manage.py test
