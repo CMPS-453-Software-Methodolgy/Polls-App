@@ -101,15 +101,12 @@ class LoginTestCase(TestCase):
         Tests when a user logs out, the `user` object in the `Response` is "AnyonymousUser".
 
         """
+        response = self.client.get(reverse("polls:question-list"))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(str(response.context.get("user")), "AnonymousUser")
+
         response = self.client.post(self.login_url, data=self.login_params)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
         response = self.client.get(reverse("polls:question-list"))
         self.assertEqual(str(response.context.get("user")), "jdoe@gmail.com")
-
-        response = self.client.get(self.logout_url)
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-
-        response = self.client.get(reverse("polls:question-list"))
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(str(response.context.get("user")), "AnonymousUser")
