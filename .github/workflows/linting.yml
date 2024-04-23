@@ -1,4 +1,4 @@
-name: Code Quality Testing
+name: Linting, Migrations, and Testing
 
 on:
     workflow_call:
@@ -74,9 +74,4 @@ jobs:
                   path-to-lcov: coverage.xml
                   flag-name: run-${{ join(matrix.*, '-') }}
                   parallel: true
-
-            - name: 'Upload coverage data'
-              uses: actions/upload-artifact@v3
-              with:
-                  name: covdata
-                  path: .coverage.*
+                  COVERALLS_REPO_TOKEN: $${{ secret.COVERALLS_REPO_TOKEN }}
