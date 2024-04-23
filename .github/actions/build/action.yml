@@ -3,11 +3,11 @@ name: build
 runs:
     using: composite
     steps:
-        - name: Set up Python ${{ matrix.version }}
+        - name: Set up Python ${{ input.version }}
           id: setup-python
           uses: actions/setup-python@v5
           with:
-              python-version: ${{ matrix.version }}
+              python-version: ${{ input.version }}
 
         - name: Load cached venv
           id: cached-venv
@@ -28,7 +28,7 @@ runs:
 
         - name: Django Migrate
           run: |
-              echo "Test: ${{ matrix.version }}"
+              echo "Test: ${{ input.version }}"
               echo "test2: ${{ steps.setup-python.outputs.python-version }}"
               source venv/bin/activate
               python manage.py migrate >/dev/null
