@@ -73,4 +73,3 @@ jobs:
                   path-to-lcov: coverage.xml
                   flag-name: run-${{ join(inputs.*, '-') }}
                   parallel: true
-                  COVERALLS_REPO_TOKEN: $${{ secrets.COVERALLS_REPO_TOKEN }}
