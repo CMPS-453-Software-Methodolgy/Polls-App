@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: build
               uses: ./.github/actions/build
@@ -31,7 +31,7 @@ jobs:
         needs: django_linting
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: build
               uses: ./.github/actions/build
@@ -53,7 +53,7 @@ jobs:
         needs: django_migrations
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: build
               uses: ./.github/actions/build

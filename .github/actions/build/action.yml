@@ -34,7 +34,6 @@ runs:
 
         - name: Django Migrate
           run: |
-              echo "Inputs python version: ${{ inputs.python-version }}"
               source venv/bin/activate
               python manage.py migrate >/dev/null
           shell: bash
