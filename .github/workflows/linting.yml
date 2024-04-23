@@ -63,4 +63,8 @@ jobs:
             - name: Run Django tests
               run: |
                   source venv/bin/activate
-                  python manage.py test
+                  pip install genbadge[coverage]
+                  python -m coverage run manage.py test
+                  coverage xml
+                  coverage html
+                  genbadge coverage -i coverage.xml

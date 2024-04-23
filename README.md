@@ -1,5 +1,7 @@
 # Django Polls App
 
+[![Coverage Status](./coverage-badge.svg)](./htmlcov/index.html)
+
 The project is deployed on [Render](https://polls-app-2iql.onrender.com/).
 
 To develop/test this website, clone this repository and follow the instructions:

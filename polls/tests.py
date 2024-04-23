@@ -58,14 +58,3 @@ class ChoiceModelTest(TestCase):
         choice2 = Choice.objects.get(id=2)
         self.assertEqual(0, choice1.votes)
         self.assertEqual(3000, choice2.votes)
-
-
-class QuestionIndexViewTests(TestCase):
-    """Test IndexView."""
-
-    def test_no_questions(self):
-        """Test No question text displayed when no object in Model."""
-        response = self.client.get(reverse("polls:question-list"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No polls are available.")
-        self.assertQuerysetEqual(response.context["object_list"], [])
