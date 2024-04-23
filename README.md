@@ -1,12 +1,12 @@
-# Django Polls App
-
-[![Coverage Status](./coverage-badge.svg)](./htmlcov/index.html)
+# Django Polls App [![Action status][ci-badge]][ci-workflow] [![Coverage Status][coverage-badge]][coverage-url]
 
 The project is deployed on [Render](https://polls-app-2iql.onrender.com/).
 
 To develop/test this website, clone this repository and follow the instructions:
 
 ## Install Python requirements
+
+[![python][python-badge]][python-url]
 
 ```bash
 pip install -r requirements.txt
@@ -69,3 +69,11 @@ To run the tests browser less:
 ```bash
 npx cypress run --headless
 ```
+
+
+[ci-badge]: https://github.com/seshagiriprabhu/poll-app/actions/workflows/base.yml/badge.svg
+[ci-workflow]: https://github.com/seshagiriprabhu/poll-app/actions/workflows/main.yml
+[coverage-badge]: ./coverage-badge.svg
+[coverage-url]: ./htmlcov/index.html
+[python-badge]: https://img.shields.io/badge/Python-3.9%7C3.10%7C3.11-3776AB.svg?style=flat&logo=python&logoColor=white
+[python-url]: https://www.python.org
