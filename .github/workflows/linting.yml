@@ -40,7 +40,6 @@ jobs:
 
             - name: Check Django migrations
               run: |
-                  echo "Inputs python version: ${{ inputs.python-version }}"
                   source venv/bin/activate
                   python manage.py makemigrations --check
                   python manage.py migrate --check
@@ -72,6 +71,6 @@ jobs:
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   path-to-lcov: coverage.xml
-                  flag-name: run-${{ join(matrix.*, '-') }}
+                  flag-name: run-${{ join(inputs.*, '-') }}
                   parallel: true
-                  COVERALLS_REPO_TOKEN: $${{ secret.COVERALLS_REPO_TOKEN }}
+                  COVERALLS_REPO_TOKEN: $${{ secrets.COVERALLS_REPO_TOKEN }}
