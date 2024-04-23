@@ -3,11 +3,12 @@ name: build
 runs:
     using: composite
     steps:
-        - name: Set up Python ${{ matrix.python-version }}
+        - name: Set up Python ${{ matrix.version }}
           id: setup-python
           uses: actions/setup-python@v5
           with:
-              python-version: ${{ matrix.python-version }}
+              python-version: ${{ matrix.version }}
+              .python-version: ${{ matrix.version }}
 
         - name: Load cached venv
           id: cached-venv
