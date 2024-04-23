@@ -1,13 +1,19 @@
 name: build
 
+inputs:
+    python-version:
+        description: 'Python version'
+        default: '3.11'
+        required: false
+
 runs:
     using: composite
     steps:
-        - name: Set up Python ${{ python-version }}
+        - name: Set up Python ${{ inputs.python-version }}
           id: setup-python
           uses: actions/setup-python@v5
           with:
-              python-version: ${{ python-version }}
+              python-version: ${{ inputs.python-version }}
 
         - name: Load cached venv
           id: cached-venv
@@ -28,7 +34,7 @@ runs:
 
         - name: Django Migrate
           run: |
-              echo "Inputs python version: ${{ python-version }}"
+              echo "Inputs python version: ${{ inputs.python-version }}"
               source venv/bin/activate
               python manage.py migrate >/dev/null
           shell: bash
