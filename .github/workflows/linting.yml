@@ -17,6 +17,8 @@ jobs:
 
             - name: build
               uses: ./.github/actions/build
+              with:
+                  python-version: ${{ inputs.python-version }}
 
             - name: Analysing the code with RUFF and pycodestyle
               run: |
@@ -37,8 +39,6 @@ jobs:
             - name: Check Django migrations
               run: |
                   echo "Inputs python version: ${{ inputs.python-version }}"
-                  echo "Matrix version: ${{ matrix.version }}"
-                  echo "Matrix python version: ${{ matrix.python-version }}"
                   source venv/bin/activate
                   python manage.py makemigrations --check
                   python manage.py migrate --check
