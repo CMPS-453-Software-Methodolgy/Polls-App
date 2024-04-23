@@ -11,5 +11,5 @@ jobs:
                 version: ['3.8', '3.9', '3.10', '3.11']
         uses: ./.github/workflows/linting.yml # calls the one above ^
         with:
-            python-version: ${{ matrix.version }}
+            version: ${{ matrix.version }}
         secrets: inherit
