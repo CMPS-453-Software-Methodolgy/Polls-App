@@ -63,8 +63,20 @@ jobs:
             - name: Run Django tests
               run: |
                   source venv/bin/activate
-                  pip install genbadge[coverage]
                   python -m coverage run manage.py test
                   coverage xml
                   coverage html
-                  genbadge coverage -i coverage.xml
+
+            - name: Coveralls
+              uses: coverallsapp/github-action@v2
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: coverage.xml
+                  flag-name: run-${{ join(matrix.*, '-') }}
+                  parallel: true
+
+            - name: 'Upload coverage data'
+              uses: actions/upload-artifact@v3
+              with:
+                  name: covdata
+                  path: .coverage.*
