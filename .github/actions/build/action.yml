@@ -19,7 +19,7 @@ runs:
         - name: Setup virtualenv and install pip requirements
           if: steps.cached-venv.outputs.cache-hit != 'true'
           run: |
-              pip install --root-user-action=ignore -q virtualenv
+              pip install -q virtualenv
               python -m venv venv
               source venv/bin/activate
               python -m pip install --upgrade -q pip
