@@ -6,9 +6,6 @@ runs:
         - name: Set up Python ${{ matrix.version }}
           id: setup-python
           uses: actions/setup-python@v5
-          run: |
-              echo "Test: ${{ matrix.version }}"
-              echo "test2: {{ python-version }}"
           with:
               python-version: ${{ matrix.version }}
 
@@ -22,6 +19,8 @@ runs:
         - name: Setup virtualenv and install pip requirements
           if: steps.cached-venv.outputs.cache-hit != 'true'
           run: |
+              echo "Test: ${{ matrix.version }}"
+              echo "test2: ${{ steps.setup-python.outputs.python-version }}"
               pip install -q virtualenv
               python -m venv venv
               source venv/bin/activate
