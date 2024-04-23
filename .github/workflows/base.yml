@@ -8,8 +8,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                version: ['3.9', '3.10', '3.11']
-        uses: ./.github/workflows/linting.yml # calls the one above ^
+                python-version: ['3.9', '3.10', '3.11']
+        uses: ./.github/workflows/linting.yml
         with:
-            python-version: ${{ matrix.version }}
+            python-version: ${{ matrix.python-version }}
         secrets: inherit
