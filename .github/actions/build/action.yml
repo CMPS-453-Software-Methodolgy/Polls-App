@@ -28,7 +28,7 @@ runs:
 
         - name: Django Migrate
           run: |
-              echo "Test: ${{ input.version }}"
+              echo "Test: ${{ inputs.version }}"
               echo "test2: ${{ steps.setup-python.outputs.python-version }}"
               source venv/bin/activate
               python manage.py migrate >/dev/null
