@@ -43,3 +43,9 @@ runs:
               source venv/bin/activate
               python manage.py collectstatic --no-input >/dev/null
           shell: bash
+
+        - name: Cache static files
+          uses: actions/upload-artifact@v4
+          with:
+              name: static
+              path: staticfiles/
