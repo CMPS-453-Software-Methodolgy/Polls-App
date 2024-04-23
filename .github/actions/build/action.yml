@@ -19,8 +19,6 @@ runs:
         - name: Setup virtualenv and install pip requirements
           if: steps.cached-venv.outputs.cache-hit != 'true'
           run: |
-              echo "Test: ${{ matrix.version }}"
-              echo "test2: ${{ steps.setup-python.outputs.python-version }}"
               pip install -q virtualenv
               python -m venv venv
               source venv/bin/activate
@@ -30,6 +28,8 @@ runs:
 
         - name: Django Migrate
           run: |
+              echo "Test: ${{ matrix.version }}"
+              echo "test2: ${{ steps.setup-python.outputs.python-version }}"
               source venv/bin/activate
               python manage.py migrate >/dev/null
           shell: bash
