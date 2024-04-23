@@ -28,8 +28,9 @@ runs:
 
         - name: Django Migrate
           run: |
-              echo "Test: ${{ inputs.python-version }}"
-              echo "test2: ${{ steps.setup-python.outputs.python-version }}"
+              echo "Inputs python version: ${{ inputs.python-version }}"
+              echo "Matrix version: ${{ matrix.version }}"
+              echo "Matrix python version: ${{ matrix.python-version }}"
               source venv/bin/activate
               python manage.py migrate >/dev/null
           shell: bash
