@@ -7,10 +7,13 @@ on:
             python-version:
                 required: true
                 type: string
+            os:
+                required: true
+                type: string
 
 jobs:
     Django-Linting:
-        runs-on: ubuntu-latest
+        runs-on: ${{ inputs.os }}
         name: Django linting using ${{ inputs.python-version }}
         steps:
             - name: Checkout repository
@@ -28,7 +31,7 @@ jobs:
                   ruff check
 
     Django-Migrations:
-        runs-on: ubuntu-latest
+        runs-on: ${{ inputs.os }}
         needs: Django-Linting
         name: Django migrations using ${{ inputs.python-version }}
         steps:
@@ -50,7 +53,7 @@ jobs:
                   python manage.py check --deploy
 
     Django-Tests:
-        runs-on: ubuntu-latest
+        runs-on: ${{ inputs.os }}
         needs: Django-Migrations
         name: Django tests using ${{ inputs.python-version }}
         steps:
@@ -78,7 +81,7 @@ jobs:
                   parallel: true
 
     Cypress-Test:
-        runs-on: ubuntu-latest
+        runs-on: ${{ inputs.os }}
         needs: Django-Migrations
         strategy:
             fail-fast: false
