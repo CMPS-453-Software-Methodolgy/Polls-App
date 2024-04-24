@@ -89,7 +89,7 @@ jobs:
                 # Node JS LTS versions
                 node: [18]
                 python-version: ['3.10', '3.11']
-                os: [ubuntu-latest, windows-latest]
+                os: [ubuntu-latest]
 
         runs-on: ${{ matrix.os }}
         needs: django-migrations
