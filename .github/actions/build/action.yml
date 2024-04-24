@@ -19,46 +19,10 @@ runs:
           uses: actions/setup-python@v5
           with:
               python-version: ${{ inputs.python-version }}
-
-        - name: Load cached venv
-          id: cached-venv
-          uses: actions/cache@v4
-          with:
-              path: venv
-              key: ${{ runner.os }}-venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/requirements.txt') }}
-              restore-keys: ${{ runner.os }}-pip-
-
-        - name: Create and activate virtual environment (Git Bash)
-          shell: bash
-          if: ${{ (steps.cached-venv.outputs.cache-hit != 'true') && (runner.os == 'Windows') }}
+              cache: 'pip'
           run: |
-              pip install -q virtualenv
-              python -m venv venv
-              source venv/Scripts/activate
               python -m pip install --upgrade -q pip
-              pip install --no-cache-dir -qr requirements.txt
-
-        - name: Create and activate virtual environment (Linux/macOS)
-          shell: bash
-          if: ${{ (steps.cached-venv.outputs.cache-hit != 'true') && (runner.os != 'Windows') }}
-          run: |
-              pip install -q virtualenv
-              python -m venv venv
-              source venv/bin/activate
-              python -m pip install --upgrade -q pip
-              pip install --no-cache-dir -qr requirements.txt
-
-        - name: Activate virtual environment (Git Bash)
-          shell: bash
-          if: runner.os == 'Windows'
-          run: |
-              source venv/Scripts/activate
-
-        - name: Activate virtual environment (Linux/macOS)
-          shell: bash
-          if: runner.os != 'Windows'
-          run: |
-              source venv/bin/activate
+              pip install -qr requirements.txt
 
         - name: Django Migrate
           shell: bash
