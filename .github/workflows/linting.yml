@@ -9,9 +9,9 @@ jobs:
             fail-fast: false
             matrix:
                 python-version: ['3.9', '3.10', '3.11']
-                os: [ubuntu-latest]
+                os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
-        name: Django linting using ${{ matrix.python-version }}
+        name: Django linting Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
                 os: [ubuntu-latest]
         runs-on: ${{ matrix.os }}
         needs: django-code-quality-check
-        name: Django migrations using ${{ matrix.python-version }}
+        name: Django migrations Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
                 os: [ubuntu-latest]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
-        name: Django tests using ${{ matrix.python-version }}
+        name: Django tests Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -98,7 +98,7 @@ jobs:
                 browser: [chrome, edge]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
-        name: E2E on Node v${{ matrix.node }} running python v${{ matrix.python-version }}
+        name: E2E on Node v${{ matrix.node }} Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -126,6 +126,7 @@ jobs:
             - name: Run Cypress Test
               uses: cypress-io/github-action@v6
               with:
+                  parallel: true
                   browser: ${{ matrix.browser }}
-                  group: Tests on Node v${{ matrix.node }} in ${{ matrix.browser }}
+                  group: Tests on Node v${{ matrix.node }} in ${{ matrix.browser }} on ${{ runner.os }} running ${{ matrix.python-version }}
                   cache-key: node-v${{ matrix.node }}-run-in-${{ matrix.browser }}-on-${{ runner.os }}-py-${{ matrix.python-version }}-hash-${{ hashFiles('yarn.lock') }}

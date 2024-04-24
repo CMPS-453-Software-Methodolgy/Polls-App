@@ -36,14 +36,18 @@ runs:
               pip install --no-cache-dir -qr requirements.txt
           shell: bash
 
+        - name: Activate virtualenv
+          run: |
+              . .venv/bin/activate
+              echo PATH=$PATH >> $GITHUB_ENV
+          shell: bash
+
         - name: Django Migrate
           run: |
-              source venv/bin/activate
               python manage.py migrate >/dev/null
           shell: bash
 
         - name: Django Collectstatic
           run: |
-              source venv/bin/activate
               python manage.py collectstatic --no-input >/dev/null
           shell: bash

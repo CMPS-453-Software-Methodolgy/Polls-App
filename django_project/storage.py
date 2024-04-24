@@ -1,4 +1,5 @@
 """Static storage."""
+
 from whitenoise.storage import CompressedManifestStaticFilesStorage
 
 
