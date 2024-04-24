@@ -79,6 +79,6 @@ npx cypress run --headless
 [python-url]: https://www.python.org
 [nodejs-badge]: https://img.shields.io/badge/node-18-brightgreen.svg
 [nodejs-url]: https://nodejs.org/en/download/
-[cypress-badge]: https://img.shields.io/badge/cypress-11.2-brightgreen.svg
+[cypress-badge]: https://img.shields.io/badge/cypress-13.8.1-brightgreen.svg
 [cypress-url]: https://www.cypress.io/
 [render-url]: https://polls-app-2iql.onrender.com/

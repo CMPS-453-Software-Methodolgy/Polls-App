@@ -4,7 +4,7 @@
     "description": "Welcome to Polls app",
     "main": "index.js",
     "devDependencies": {
-        "cypress": "^11.2.0"
+        "cypress": "^13.8.1"
     },
     "scripts": {
         "e2e": "cypress open"
