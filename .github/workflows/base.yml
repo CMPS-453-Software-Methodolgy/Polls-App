@@ -5,6 +5,7 @@ on:
 
 jobs:
     version-matrix:
+        name: Python Version
         strategy:
             fail-fast: false
             matrix:

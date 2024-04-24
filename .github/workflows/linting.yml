@@ -94,17 +94,19 @@ jobs:
                   node-version: ${{ matrix.node }}
                   cache: 'npm'
 
-            - name: Install dependencies
-              run: |
-                  npm install --save-dev cypress
-
             - name: build
               uses: ./.github/actions/build
               with:
                   python-version: ${{ inputs.python-version }}
 
+            - name: Install dependencies
+              run: |
+                  npm install --save-dev cypress
+
             - name: Start Django server (in the background)
-              run: python3 manage.py testserver cypress/fixtures/testdb.json --no-input &
+              run: |
+                  source venv/bin/activate
+                  python3 manage.py testserver cypress/fixtures/testdb.json --no-input &
 
             - name: Run Cypress Test
               uses: cypress-io/github-action@v6
