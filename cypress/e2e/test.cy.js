@@ -38,15 +38,36 @@ describe('Student Login', () => {
     });
 });
 
+describe('Student Logout', () => {
+    beforeEach(() => {
+        cy.login(stud_email, stud_password);
+    });
+    it('Test Logout', () => {
+        cy.get('form').eq(0).submit();
+    });
+});
+
 describe('Teacher Login', () => {
     it('Test Login Form', () => {
         cy.login(teach_email, teach_password);
     });
 });
 
+describe('Teacher Logout', () => {
+    beforeEach(() => {
+        cy.login(teach_email, teach_password);
+    });
+    it('Test Logout', () => {
+        cy.get('form').eq(0).submit();
+    });
+});
+
 describe('Student: Switch Role', () => {
     beforeEach(() => {
         cy.login(stud_email, stud_password);
+    });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
     });
     it('Change role', () => {
         cy.visit('/accounts/profile/update/');
@@ -59,6 +80,9 @@ describe('Teacher: Switch Role', () => {
     beforeEach(() => {
         cy.login(teach_email, teach_password);
     });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
+    });
     it('Change role', () => {
         cy.visit('/accounts/profile/update/');
         cy.get('select').eq(1).select('Teacher').should('have.value', '2');
@@ -69,6 +93,9 @@ describe('Teacher: Switch Role', () => {
 describe('Teacher: Create Questions', () => {
     beforeEach(() => {
         cy.login(teach_email, teach_password);
+    });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
     });
     it('Test Create Question Button', () => {
         cy.visit('/');
@@ -121,6 +148,9 @@ describe('Student: Make a poll', () => {
     beforeEach(() => {
         cy.login(stud_email, stud_password);
     });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
+    });
     it('Available polls', () => {
         cy.visit('/');
         cy.contains('Available Polls');
@@ -164,6 +194,9 @@ describe('RBAC: Anonymous', () => {
 describe('RBAC: Student', () => {
     beforeEach(() => {
         cy.login(stud_email, stud_password);
+    });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
     });
     it('Add Question: Should Redirect', () => {
         cy.visit('/question/add');
