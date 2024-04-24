@@ -20,9 +20,10 @@ runs:
           with:
               python-version: ${{ inputs.python-version }}
               cache: 'pip'
-          run: |
+        - run: |
               python -m pip install --upgrade -q pip
               pip install -qr requirements.txt
+          shell: bash
 
         - name: Django Migrate
           shell: bash
