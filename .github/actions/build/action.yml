@@ -18,7 +18,6 @@ runs:
           uses: actions/setup-python@v5
           with:
               python-version: ${{ inputs.python-version }}
-              os: $${{ inputs.os }}
 
         - name: Load cached venv
           id: cached-venv

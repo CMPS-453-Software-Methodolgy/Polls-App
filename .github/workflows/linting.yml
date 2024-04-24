@@ -1,20 +1,17 @@
 name: Linting, Migrations, and Testing
 
 on:
-    workflow_call:
-        inputs:
-            # the variable you can use in place of a matrix
-            python-version:
-                required: true
-                type: string
-            os:
-                required: true
-                type: string
+    push:
 
 jobs:
-    Django-Linting:
-        runs-on: ${{ inputs.os }}
-        name: Django linting using ${{ inputs.python-version }}
+    django-code-quality-check:
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: ['3.9', '3.10', '3.11']
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+        name: Django linting using ${{ matrix.python-version }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -22,7 +19,7 @@ jobs:
             - name: build
               uses: ./.github/actions/build
               with:
-                  python-version: ${{ inputs.python-version }}
+                  python-version: ${{ matrix.python-version }}
 
             - name: Analysing the code with RUFF and pycodestyle
               run: |
@@ -30,10 +27,15 @@ jobs:
                   pylama .
                   ruff check
 
-    Django-Migrations:
-        runs-on: ${{ inputs.os }}
-        needs: Django-Linting
-        name: Django migrations using ${{ inputs.python-version }}
+    django-migrations:
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: ['3.9', '3.10', '3.11']
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+        needs: django-code-quality-check
+        name: Django migrations using ${{ matrix.python-version }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -41,7 +43,7 @@ jobs:
             - name: build
               uses: ./.github/actions/build
               with:
-                  python-version: ${{ inputs.python-version }}
+                  python-version: ${{ matrix.python-version }}
 
             - name: Check Django migrations
               run: |
@@ -52,10 +54,15 @@ jobs:
                   python manage.py check --database default
                   python manage.py check --deploy
 
-    Django-Tests:
-        runs-on: ${{ inputs.os }}
-        needs: Django-Migrations
-        name: Django tests using ${{ inputs.python-version }}
+    django-unit-tests:
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: ['3.9', '3.10', '3.11']
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+        needs: django-migrations
+        name: Django tests using ${{ matrix.python-version }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -63,7 +70,7 @@ jobs:
             - name: build
               uses: ./.github/actions/build
               with:
-                  python-version: ${{ inputs.python-version }}
+                  python-version: ${{ matrix.python-version }}
 
             - name: Run Django tests
               run: |
@@ -77,18 +84,20 @@ jobs:
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   path-to-lcov: coverage.xml
-                  flag-name: run-${{ join(inputs.*, '-') }}
+                  flag-name: run-${{ join(matrix.*, '-') }}
                   parallel: true
 
-    Cypress-Test:
-        runs-on: ${{ inputs.os }}
-        needs: Django-Migrations
+    cypress-test:
         strategy:
             fail-fast: false
             matrix:
                 # Node JS LTS versions
                 node: [18, 20]
-        name: E2E on Node v${{ matrix.node }} running python v${{ inputs.python-version }}
+                python-version: ['3.9', '3.10', '3.11']
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+        needs: django-migrations
+        name: E2E on Node v${{ matrix.node }} running python v${{ matrix.python-version }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -102,7 +111,7 @@ jobs:
             - name: build
               uses: ./.github/actions/build
               with:
-                  python-version: ${{ inputs.python-version }}
+                  python-version: ${{ matrix.python-version }}
 
             - name: Install dependencies
               run: |
@@ -118,4 +127,4 @@ jobs:
               with:
                   command: npx cypress run --headless
                   group: Tests on Node v${{ matrix.node }}
-                  cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-py-${{inputs.python-version }}-hash-${{ hashFiles('yarn.lock') }}
+                  cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-py-${{ matrix.python-version }}-hash-${{ hashFiles('yarn.lock') }}
