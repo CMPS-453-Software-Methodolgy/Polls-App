@@ -11,6 +11,14 @@ jobs:
             matrix:
                 python-version: ['3.10', '3.11']
                 os: [ubuntu-latest, windows-latest, macos-latest]
+                include:
+                    - os: ubuntu-latest
+                      path: ~/.cache/pip
+                    - os: macos-latest
+                      path: ~/Library/Caches/pip
+                    - os: windows-latest
+                      path: ~\AppData\Local\pip\Cache
+
         runs-on: ${{ matrix.os }}
         name: Py-${{ matrix.python-version }} OS-${{ matrix.os }}
         steps:
@@ -19,8 +27,6 @@ jobs:
 
             - name: build
               uses: ./.github/actions/build
-              with:
-                  python-version: ${{ matrix.python-version }}
 
             - name: Analysing the code with RUFF and pycodestyle
               run: |
@@ -33,6 +39,14 @@ jobs:
             matrix:
                 python-version: ['3.10', '3.11']
                 os: [ubuntu-latest, windows-latest, macos-latest]
+                include:
+                    - os: ubuntu-latest
+                      path: ~/.cache/pip
+                    - os: macos-latest
+                      path: ~/Library/Caches/pip
+                    - os: windows-latest
+                      path: ~\AppData\Local\pip\Cache
+
         runs-on: ${{ matrix.os }}
         needs: django-code-quality-check
         name: Py-${{ matrix.python-version }} OS-${{ matrix.os }}
@@ -42,8 +56,6 @@ jobs:
 
             - name: build
               uses: ./.github/actions/build
-              with:
-                  python-version: ${{ matrix.python-version }}
 
             - name: Check Django migrations
               run: |
@@ -59,6 +71,14 @@ jobs:
             matrix:
                 python-version: ['3.10', '3.11']
                 os: [ubuntu-latest, windows-latest, macos-latest]
+                include:
+                    - os: ubuntu-latest
+                      path: ~/.cache/pip
+                    - os: macos-latest
+                      path: ~/Library/Caches/pip
+                    - os: windows-latest
+                      path: ~\AppData\Local\pip\Cache
+
         runs-on: ${{ matrix.os }}
         needs: django-migrations
         name: Py-${{ matrix.python-version }} OS-${{ matrix.os }}
@@ -68,8 +88,6 @@ jobs:
 
             - name: build
               uses: ./.github/actions/build
-              with:
-                  python-version: ${{ matrix.python-version }}
 
             - name: Run Django tests
               run: |
@@ -93,6 +111,14 @@ jobs:
                 node: [18, 20]
                 python-version: ['3.10', '3.11']
                 os: [ubuntu-latest]
+                include:
+                    - os: ubuntu-latest
+                      path: ~/.cache/pip
+                    - os: macos-latest
+                      path: ~/Library/Caches/pip
+                    - os: windows-latest
+                      path: ~\AppData\Local\pip\Cache
+
         runs-on: ${{ matrix.os }}
         needs: django-migrations
         name: Node-${{ matrix.node }} Py-${{ matrix.python-version }} OS-${{ matrix.os }}
@@ -108,8 +134,6 @@ jobs:
 
             - name: build
               uses: ./.github/actions/build
-              with:
-                  python-version: ${{ matrix.python-version }}
 
             - name: Install dependencies
               run: |

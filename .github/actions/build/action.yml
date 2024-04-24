@@ -10,6 +10,10 @@ inputs:
         description: 'Operating system'
         default: 'ubuntu-latest'
         required: false
+    path:
+        description: 'Pip path'
+        default: ~/.cache/pip
+        required: false
 
 runs:
     using: composite
@@ -19,8 +23,14 @@ runs:
           uses: actions/setup-python@v5
           with:
               python-version: ${{ inputs.python-version }}
-              cache: 'pip'
-        - run: |
+
+        - uses: actions/cache@v4
+          with:
+              path: ${{ inputs.path }}
+              key: ${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('requirements.txt') }}
+
+        - name: Install requirements
+          run: |
               pip freeze
               python -m pip install --upgrade pip
               pip install -r requirements.txt
