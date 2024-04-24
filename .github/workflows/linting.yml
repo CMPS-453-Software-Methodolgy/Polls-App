@@ -2,6 +2,7 @@ name: Linting, Migrations, and Testing
 
 on:
     push:
+    pull_request:
 
 jobs:
     django-code-quality-check:
@@ -11,7 +12,7 @@ jobs:
                 python-version: ['3.9', '3.10', '3.11']
                 os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
-        name: Django linting Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
+        name: Py- ${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -34,7 +35,7 @@ jobs:
                 os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         needs: django-code-quality-check
-        name: Django migrations Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
+        name: Py- ${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -60,7 +61,7 @@ jobs:
                 os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
-        name: Django tests Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
+        name: Py- ${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -94,7 +95,7 @@ jobs:
                 os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
-        name: E2E on Node v${{ matrix.node }} Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
+        name: Node- ${{ matrix.node }} Py- ${{ matrix.python-version }} OS- ${{ matrix.os }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
