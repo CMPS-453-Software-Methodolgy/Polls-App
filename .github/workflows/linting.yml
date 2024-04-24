@@ -95,6 +95,7 @@ jobs:
                 node: [18, 20]
                 python-version: ['3.9', '3.10', '3.11']
                 os: [ubuntu-latest]
+                browser: [chrome, edge]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
         name: E2E on Node v${{ matrix.node }} running python v${{ matrix.python-version }}
@@ -125,6 +126,6 @@ jobs:
             - name: Run Cypress Test
               uses: cypress-io/github-action@v6
               with:
-                  command: npx cypress run --headless
-                  group: Tests on Node v${{ matrix.node }}
-                  cache-key: node-v${{ matrix.node }}-on-${{ runner.os }}-py-${{ matrix.python-version }}-hash-${{ hashFiles('yarn.lock') }}
+                  browser: ${{ matrix.browser }}
+                  group: Tests on Node v${{ matrix.node }} in ${{ matrix.browser }}
+                  cache-key: node-v${{ matrix.node }}-run-in-${{ matrix.browser }}-on-${{ runner.os }}-py-${{ matrix.python-version }}-hash-${{ hashFiles('yarn.lock') }}
