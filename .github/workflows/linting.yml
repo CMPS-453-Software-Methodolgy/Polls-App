@@ -31,7 +31,7 @@ jobs:
             fail-fast: false
             matrix:
                 python-version: ['3.9', '3.10', '3.11']
-                os: [ubuntu-latest]
+                os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         needs: django-code-quality-check
         name: Django migrations Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
@@ -57,7 +57,7 @@ jobs:
             fail-fast: false
             matrix:
                 python-version: ['3.9', '3.10', '3.11']
-                os: [ubuntu-latest]
+                os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
         name: Django tests Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
@@ -91,8 +91,7 @@ jobs:
                 # Node JS LTS versions
                 node: [18, 20]
                 python-version: ['3.9', '3.10', '3.11']
-                os: [ubuntu-latest]
-                browser: [chrome, edge]
+                os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         needs: django-migrations
         name: E2E on Node v${{ matrix.node }} Python v${{ matrix.python-version }} OS- ${{ matrix.os }}
@@ -117,12 +116,9 @@ jobs:
 
             - name: Start Django server (in the background)
               run: |
-                  python3 manage.py testserver cypress/fixtures/testdb.json --no-input &
+                  python manage.py testserver cypress/fixtures/testdb.json --no-input &
 
             - name: Run Cypress Test
               uses: cypress-io/github-action@v6
               with:
-                  parallel: true
-                  browser: ${{ matrix.browser }}
-                  group: Tests on Node v${{ matrix.node }} in ${{ matrix.browser }} on ${{ runner.os }} running ${{ matrix.python-version }}
-                  cache-key: node-v${{ matrix.node }}-run-in-${{ matrix.browser }}-on-${{ runner.os }}-py-${{ matrix.python-version }}-hash-${{ hashFiles('yarn.lock') }}
+                  cache-key: node-v${{ matrix.node }}-run-on-${{ runner.os }}-py-${{ matrix.python-version }}-hash-${{ hashFiles('yarn.lock') }}
