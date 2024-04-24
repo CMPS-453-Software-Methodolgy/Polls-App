@@ -19,6 +19,7 @@ runs:
           uses: actions/setup-python@v5
           with:
               python-version: ${{ inputs.python-version }}
+              cache: 'pip'
 
         - name: Load cached venv
           id: cached-venv
@@ -31,19 +32,19 @@ runs:
           shell: bash
           run: |
               pip install -q virtualenv
-              python -m venv env
+              python -m venv venv
 
-        - name: Create and activate virtual environment (Git Bash)
+        - name: Activate virtual environment (Git Bash)
           shell: bash
           if: runner.os == 'Windows'
           run: |
-              source env/Scripts/activate
+              source venv/Scripts/activate
 
-        - name: Create virtual environment (Linux/macOS)
+        - name: Activate virtual environment (Linux/macOS)
           shell: bash
           if: runner.os != 'Windows'
           run: |
-              source env/bin/activate
+              source venv/bin/activate
 
         - name: Install dependencies
           shell: bash
