@@ -20,7 +20,7 @@ runs:
           with:
               python-version: ${{ inputs.python-version }}
 
-        - uses: actions/cache@v3
+        - uses: actions/cache@v4
           if: startsWith(runner.os, 'Linux')
           with:
               path: ~/.cache/pip
@@ -28,7 +28,7 @@ runs:
               restore-keys: |
                   ${{ runner.os }}-pip-
 
-        - uses: actions/cache@v3
+        - uses: actions/cache@v4
           if: startsWith(runner.os, 'macOS')
           with:
               path: ~/Library/Caches/pip
@@ -36,7 +36,7 @@ runs:
               restore-keys: |
                   ${{ runner.os }}-pip-
 
-        - uses: actions/cache@v3
+        - uses: actions/cache@v4
           if: startsWith(runner.os, 'Windows')
           with:
               path: ~\AppData\Local\pip\Cache
@@ -46,7 +46,6 @@ runs:
 
         - name: Install requirements
           run: |
-              pip freeze
               python -m pip install --upgrade pip
               pip install -r requirements.txt
           shell: bash
