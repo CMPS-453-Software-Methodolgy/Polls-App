@@ -19,7 +19,6 @@ runs:
           uses: actions/setup-python@v5
           with:
               python-version: ${{ inputs.python-version }}
-              cache: 'pip'
 
         - name: Load cached venv
           id: cached-venv
@@ -30,6 +29,7 @@ runs:
 
         - name: Create virtual environment
           shell: bash
+          if: steps.cached-venv.outputs.cache-hit != 'true'
           run: |
               pip install -q virtualenv
               python -m venv venv
