@@ -21,8 +21,9 @@ runs:
               python-version: ${{ inputs.python-version }}
               cache: 'pip'
         - run: |
-              python -m pip install --upgrade -q pip
-              pip install -qr requirements.txt
+              pip freeze
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
           shell: bash
 
         - name: Django Migrate
