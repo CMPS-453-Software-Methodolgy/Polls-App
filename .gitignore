@@ -28,6 +28,7 @@ cypress/videos/
 # Distribution / packaging
 .Python
 build/
+!.github/actions/build/
 develop-eggs/
 dist/
 downloads/
@@ -44,6 +45,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+coverage-badge.svg
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

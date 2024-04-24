@@ -1,4 +1,5 @@
 """Polls app views."""
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render

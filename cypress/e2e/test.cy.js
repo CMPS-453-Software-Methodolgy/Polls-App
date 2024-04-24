@@ -38,9 +38,27 @@ describe('Student Login', () => {
     });
 });
 
+describe('Student Logout', () => {
+    beforeEach(() => {
+        cy.login(stud_email, stud_password);
+    });
+    it('Test Logout', () => {
+        cy.get('form').eq(0).submit();
+    });
+});
+
 describe('Teacher Login', () => {
     it('Test Login Form', () => {
         cy.login(teach_email, teach_password);
+    });
+});
+
+describe('Teacher Logout', () => {
+    beforeEach(() => {
+        cy.login(teach_email, teach_password);
+    });
+    it('Test Logout', () => {
+        cy.get('form').eq(0).submit();
     });
 });
 
@@ -48,10 +66,13 @@ describe('Student: Switch Role', () => {
     beforeEach(() => {
         cy.login(stud_email, stud_password);
     });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
+    });
     it('Change role', () => {
         cy.visit('/accounts/profile/update/');
         cy.get('select').eq(1).select('Student').should('have.value', '1');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
     });
 });
 
@@ -59,16 +80,22 @@ describe('Teacher: Switch Role', () => {
     beforeEach(() => {
         cy.login(teach_email, teach_password);
     });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
+    });
     it('Change role', () => {
         cy.visit('/accounts/profile/update/');
         cy.get('select').eq(1).select('Teacher').should('have.value', '2');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
     });
 });
 
 describe('Teacher: Create Questions', () => {
     beforeEach(() => {
         cy.login(teach_email, teach_password);
+    });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
     });
     it('Test Create Question Button', () => {
         cy.visit('/');
@@ -77,10 +104,10 @@ describe('Teacher: Create Questions', () => {
     it('Add: Two Questions', () => {
         cy.visit('/question/add');
         cy.get('input[name = "question_text"]').type('Sample question 1');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/question/add');
         cy.get('input[name = "question_text"]').type('Sample question 2');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
     });
     it('Test Add Choice Button', () => {
         cy.visit('/1');
@@ -90,36 +117,39 @@ describe('Teacher: Create Questions', () => {
     it('Add: Choices for Question 1', () => {
         cy.visit('/1/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 1');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/1/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 2');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/1/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 3');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/1/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 4');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
     });
     it('Add: Choices for Question 2', () => {
         cy.visit('/2/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 1');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/2/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 2');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/2/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 3');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
         cy.visit('/2/choice/add');
         cy.get('input[name = "choice_text"]').type('Choice 4');
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
     });
 });
 
 describe('Student: Make a poll', () => {
     beforeEach(() => {
         cy.login(stud_email, stud_password);
+    });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
     });
     it('Available polls', () => {
         cy.visit('/');
@@ -134,7 +164,7 @@ describe('Student: Make a poll', () => {
         cy.contains('Choice 3');
         cy.contains('Choice 4');
         cy.get('input[id = "choice4"]').click();
-        cy.get('form').submit();
+        cy.get('form').eq(1).submit();
     });
     it('View Results', () => {
         cy.visit('/1/results');
@@ -164,6 +194,9 @@ describe('RBAC: Anonymous', () => {
 describe('RBAC: Student', () => {
     beforeEach(() => {
         cy.login(stud_email, stud_password);
+    });
+    afterEach(() => {
+        cy.get('form').eq(0).submit();
     });
     it('Add Question: Should Redirect', () => {
         cy.visit('/question/add');

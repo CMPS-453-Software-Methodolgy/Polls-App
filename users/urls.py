@@ -1,4 +1,5 @@
 """Accounts app URL Configuration."""
+
 from django.urls import path
 
 from users import views
